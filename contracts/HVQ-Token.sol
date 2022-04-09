@@ -56,6 +56,28 @@ contract HVQToken is IERC20, Ownable {
         return totalSupply_;
     }
 
+    function _mint(address addressToMint, uint amount) internal returns (bool){
+        require(addressToMint != address(0),"Cannot mint to address 0");
+
+        balances[addressToMint] = balances[addressToMint].add(amount);
+        totalSupply_ = totalSupply_.add(amount);
+
+        emit Transfer(address(0),addressToMint, amount);
+        return true;
+    }
+
+    function _burn(address addressToBurn, uint amount) internal returns(bool) {
+        require(addressToBurn!=address(0),"Cannot burn from address 0");
+        require(balances[addressToBurn] >= amount, "Out of balance");
+
+        totalSupply_ = totalSupply_.sub(amount);
+        balances[addressToBurn] = balances[addressToBurn].sub(amount);
+
+        emit Transfer(addressToBurn, address(0), amount);
+        
+        return true;
+    }
+
     function balanceOf(address addressToCheck) public view override returns (uint256){
         return balances[addressToCheck];
     }
