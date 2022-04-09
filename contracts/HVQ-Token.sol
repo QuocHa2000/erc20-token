@@ -33,18 +33,21 @@ contract HVQToken is IERC20, Ownable {
     using SafeMath for uint256;
 
     address public ownerAddress;
-    string public constant name = "HVQ Token";
-    string public constant symbol = "HVQ";
-    uint public constant decimals = 18;
+    string public name;
+    string public symbol;
+    uint public decimals;
     
     mapping (address=>uint256) balances;
     mapping (address=>mapping(address=>uint256)) allowed;
 
     uint256 totalSupply_;
 
-    constructor (uint256 total) public{
+    constructor (){
+        name = "HVQ Token";
+        symbol = "HVQ";
+        decimals = 18;
         ownerAddress = msg.sender;
-        totalSupply_ = total;
+        totalSupply_ = 100000000000000000000000000;
         balances[msg.sender] = totalSupply_;
         emit Transfer(address(0), msg.sender, totalSupply_);
     }
